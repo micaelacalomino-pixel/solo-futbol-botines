@@ -54,3 +54,4 @@ se reflejan solos en el sitio en producción cada ~5 minutos
   links en la Sheet (columnas foto1/foto2/foto3).
 - Revisar que cada fila de la Sheet tenga el nombre sin espacios de más
   (ver nota sobre "Phatom " en el chat de diseño).
+# solo-futbol-botines
