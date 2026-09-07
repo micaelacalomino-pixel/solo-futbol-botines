@@ -82,6 +82,40 @@ h1, h2, .sitio-header-nombre, .talle-boton, .boton-whatsapp {
   gap: 10px;
 }
 
+.filtros-categoria {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.filtros-categoria::-webkit-scrollbar {
+  display: none;
+}
+
+.filtro-boton {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1.5px solid var(--color-crema-oscuro);
+  background: #ffffff;
+  color: var(--color-negro);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.filtro-boton-activo {
+  border-color: var(--color-negro);
+  background: var(--color-negro);
+  color: var(--color-dorado);
+  font-weight: 600;
+}
+
 @media (min-width: 640px) {
   .pagina-catalogo,
   .pagina-ficha {

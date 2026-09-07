@@ -1,5 +1,5 @@
 import { obtenerCatalogo } from "@/lib/catalogo";
-import ProductoGrid from "@/components/ProductoGrid";
+import CatalogoConFiltros from "@/components/CatalogoConFiltros";
 
 export default async function Home() {
   const productos = await obtenerCatalogo();
@@ -9,7 +9,7 @@ export default async function Home() {
       <header className="catalogo-header">
         <h1>Solo Futbol Botines</h1>
       </header>
-      <ProductoGrid productos={productos} />
+      <CatalogoConFiltros productos={productos} />
     </main>
   );
 }
