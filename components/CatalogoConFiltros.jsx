@@ -17,16 +17,52 @@ export default function CatalogoConFiltros({ productos }) {
   }, [productos]);
 
   const [categoriaActiva, setCategoriaActiva] = useState("Todos");
+  const [busqueda, setBusqueda] = useState("");
 
   const productosFiltrados = useMemo(() => {
-    if (categoriaActiva === "Todos") return productos;
-    return productos.filter(
-      (p) => p.categoria.toLowerCase() === categoriaActiva.toLowerCase()
-    );
-  }, [productos, categoriaActiva]);
+    let resultado = productos;
+
+    if (categoriaActiva !== "Todos") {
+      resultado = resultado.filter(
+        (p) => p.categoria.toLowerCase() === categoriaActiva.toLowerCase()
+      );
+    }
+
+    const termino = busqueda.trim().toLowerCase();
+    if (termino !== "") {
+      resultado = resultado.filter(
+        (p) =>
+          p.nombre.toLowerCase().includes(termino) ||
+          p.marca.toLowerCase().includes(termino) ||
+          p.talles.some((t) => t.toLowerCase().includes(termino))
+      );
+    }
+
+    return resultado;
+  }, [productos, categoriaActiva, busqueda]);
 
   return (
     <div>
+      <div className="buscador">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="buscador-icono" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
+          <path d="M20 20L16.5 16.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+        <input
+          type="text"
+          value={busqueda}
+          onChange={(e) => setBusqueda(e.target.value)}
+          placeholder="Buscar por nombre, marca o talle..."
+          className="buscador-input"
+          aria-label="Buscar productos"
+        />
+        {busqueda !== "" && (
+          <button type="button" className="buscador-limpiar" onClick={() => setBusqueda("")} aria-label="Limpiar búsqueda">
+            ×
+          </button>
+        )}
+      </div>
+
       <div className="filtros-categoria" role="tablist" aria-label="Categorías">
         <button type="button" role="tab" aria-selected={categoriaActiva === "Todos"} className={categoriaActiva === "Todos" ? "filtro-boton filtro-boton-activo" : "filtro-boton"} onClick={() => setCategoriaActiva("Todos")}>
           Todos
@@ -38,7 +74,13 @@ export default function CatalogoConFiltros({ productos }) {
         ))}
       </div>
 
-      <ProductoGrid productos={productosFiltrados} />
+      {productosFiltrados.length === 0 ? (
+        <p className="catalogo-vacio">
+          No encontramos productos que coincidan con tu búsqueda.
+        </p>
+      ) : (
+        <ProductoGrid productos={productosFiltrados} />
+      )}
     </div>
   );
 }

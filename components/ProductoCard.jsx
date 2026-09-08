@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { optimizarImagen } from "@/lib/cloudinary";
 
 export default function ProductoCard({ producto }) {
   const fotoPrincipal = producto.fotos[0];
@@ -7,7 +8,11 @@ export default function ProductoCard({ producto }) {
     <Link href={`/producto/${producto.id}`} className="producto-card">
       <div className="producto-card-foto">
         {fotoPrincipal ? (
-          <img src={fotoPrincipal} alt={producto.nombre} loading="lazy" />
+          <img
+            src={optimizarImagen(fotoPrincipal, 400)}
+            alt={producto.nombre}
+            loading="lazy"
+          />
         ) : (
           <div className="producto-card-foto-vacia" />
         )}
@@ -15,12 +20,12 @@ export default function ProductoCard({ producto }) {
       <div className="producto-card-info">
         <p className="producto-card-marca">{producto.marca}</p>
         <p className="producto-card-nombre">{producto.nombre}</p>
+
         {producto.talles.length > 0 && (
           <p className="producto-card-talles">
-            Talles{" "}
             {producto.talles.length === 1
-              ? producto.talles[0]
-              : `${producto.talles[0]}-${producto.talles[producto.talles.length - 1]}`}
+              ? `Talle ${producto.talles[0]}`
+              : `Talles ${producto.talles[0]}-${producto.talles[producto.talles.length - 1]}`}
           </p>
         )}
       </div>

@@ -1,9 +1,8 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { obtenerCatalogo, obtenerProducto } from "@/lib/catalogo";
+import { optimizarImagen } from "@/lib/cloudinary";
 import SelectorTalleYConsultar from "@/components/SelectorTalleYConsultar";
-
-export const revalidate = 300;
 
 export async function generateStaticParams() {
   const productos = await obtenerCatalogo();
@@ -25,7 +24,12 @@ export default async function FichaProducto({ params }) {
 
       <div className="ficha-fotos">
         {producto.fotos.map((foto, i) => (
-          <img key={i} src={foto} alt={`${producto.nombre} - foto ${i + 1}`} loading="lazy" />
+          <img
+            key={i}
+            src={optimizarImagen(foto, 800)}
+            alt={`${producto.nombre} - foto ${i + 1}`}
+            loading="lazy"
+          />
         ))}
       </div>
 
