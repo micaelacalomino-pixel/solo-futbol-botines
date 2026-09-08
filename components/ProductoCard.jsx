@@ -17,7 +17,10 @@ export default function ProductoCard({ producto }) {
         <p className="producto-card-nombre">{producto.nombre}</p>
         {producto.talles.length > 0 && (
           <p className="producto-card-talles">
-            Talles {producto.talles[0]}-{producto.talles[producto.talles.length - 1]}
+            Talles{" "}
+            {producto.talles.length === 1
+              ? producto.talles[0]
+              : `${producto.talles[0]}-${producto.talles[producto.talles.length - 1]}`}
           </p>
         )}
       </div>
