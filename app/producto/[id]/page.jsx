@@ -9,6 +9,34 @@ export async function generateStaticParams() {
   return productos.map((producto) => ({ id: producto.id }));
 }
 
+export async function generateMetadata({ params }) {
+  const producto = await obtenerProducto(params.id);
+
+  if (!producto) {
+    return { title: "Producto no encontrado — Solo Futbol Botines" };
+  }
+
+  const titulo = `${producto.nombre} — ${producto.marca} | Solo Futbol Botines`;
+  const descripcion = `Consultá disponibilidad de ${producto.nombre} (${producto.marca}) por WhatsApp.`;
+  const foto = producto.fotos[0];
+
+  return {
+    title: titulo,
+    description: descripcion,
+    openGraph: {
+      title: titulo,
+      description: descripcion,
+      images: foto ? [{ url: optimizarImagen(foto, 800) }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: titulo,
+      description: descripcion,
+      images: foto ? [optimizarImagen(foto, 800)] : undefined,
+    },
+  };
+}
+
 export default async function FichaProducto({ params }) {
   const producto = await obtenerProducto(params.id);
 
