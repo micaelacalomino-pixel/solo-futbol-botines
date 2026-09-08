@@ -7,7 +7,10 @@ export default function SelectorTalleYConsultar({ nombre, marca, talles }) {
   const [talleElegido, setTalleElegido] = useState(null);
 
   const link = talleElegido
-    ? armarLinkWhatsApp(nombre, marca, talleElegido)
+    ? armarLinkWhatsApp(
+          nombre, 
+          marca, 
+          talleElegido,typeof window !== "undefined" ? window.location.href : "")
     : null;
 
   return (
