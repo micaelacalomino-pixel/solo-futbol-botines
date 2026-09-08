@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import ProductoGrid from "./ProductoGrid";
 
-const CATEGORIAS_FIJAS = ["Futbol 11", "Futbol 5", "Accesorios", "Guantes"];
+const CATEGORIAS_FIJAS = ["Futbol 11", "Futbol 5", "Accesorios", "Guantes", "Camisetas"];
 
 export default function CatalogoConFiltros({ productos }) {
   const categoriasDisponibles = useMemo(() => {
