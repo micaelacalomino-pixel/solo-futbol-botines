@@ -1,13 +1,8 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { obtenerCatalogo, obtenerProducto } from "@/lib/catalogo";
+import { obtenerProducto } from "@/lib/catalogo";
 import { optimizarImagen } from "@/lib/cloudinary";
 import SelectorTalleYConsultar from "@/components/SelectorTalleYConsultar";
-
-export async function generateStaticParams() {
-  const productos = await obtenerCatalogo();
-  return productos.map((producto) => ({ id: producto.id }));
-}
 
 export async function generateMetadata({ params }) {
   const producto = await obtenerProducto(params.id);
