@@ -3,6 +3,13 @@
 import { useMemo, useState } from "react";
 import ProductoGrid from "./ProductoGrid";
 
+function tallesMinimo(talles) {
+  const numeros = talles
+    .map((t) => parseFloat(t.replace(",", ".")))
+    .filter((n) => !Number.isNaN(n));
+  return numeros.length > 0 ? Math.min(...numeros) : Infinity;
+}
+
 const CATEGORIAS_FIJAS = ["Futbol 11", "Futbol 5", "Accesorios", "Guantes", "Camisetas"];
 
 export default function CatalogoConFiltros({ productos }) {
@@ -38,7 +45,9 @@ export default function CatalogoConFiltros({ productos }) {
       );
     }
 
-    return resultado;
+      return resultado
+      .slice()
+      .sort((a, b) => tallesMinimo(a.talles) - tallesMinimo(b.talles));
   }, [productos, categoriaActiva, busqueda]);
 
   return (
