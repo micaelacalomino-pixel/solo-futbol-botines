@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ProductoGrid from "./ProductoGrid";
 
 function tallesMinimo(talles) {
@@ -23,8 +24,25 @@ export default function CatalogoConFiltros({ productos }) {
     return [...CATEGORIAS_FIJAS, ...extras];
   }, [productos]);
 
-  const [categoriaActiva, setCategoriaActiva] = useState("Todos");
-  const [busqueda, setBusqueda] = useState("");
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const [categoriaActiva, setCategoriaActiva] = useState(
+    searchParams.get("categoria") || "Todos"
+  );
+  const [busqueda, setBusqueda] = useState(searchParams.get("buscar") || "");
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (categoriaActiva !== "Todos") params.set("categoria", categoriaActiva);
+    if (busqueda.trim() !== "") params.set("buscar", busqueda.trim());
+    const query = params.toString();
+    router.replace(query ? `${pathname}?${query}` : pathname, {
+      scroll: false,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categoriaActiva, busqueda]);
 
   const productosFiltrados = useMemo(() => {
     let resultado = productos;
@@ -45,7 +63,7 @@ export default function CatalogoConFiltros({ productos }) {
       );
     }
 
-      return resultado
+    return resultado
       .slice()
       .sort((a, b) => tallesMinimo(a.talles) - tallesMinimo(b.talles));
   }, [productos, categoriaActiva, busqueda]);

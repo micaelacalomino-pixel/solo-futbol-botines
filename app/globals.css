@@ -243,6 +243,11 @@ h1, h2, .sitio-header-nombre, .talle-boton, .boton-whatsapp {
   color: var(--color-texto-suave);
   text-decoration: none;
   margin-bottom: 16px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
 }
 
 .ficha-fotos {

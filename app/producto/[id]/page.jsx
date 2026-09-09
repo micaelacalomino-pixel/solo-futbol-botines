@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { obtenerProducto } from "@/lib/catalogo";
 import { optimizarImagen } from "@/lib/cloudinary";
 import SelectorTalleYConsultar from "@/components/SelectorTalleYConsultar";
+import VolverAlCatalogo from "@/components/VolverAlCatalogo";
 
 export async function generateMetadata({ params }) {
   const producto = await obtenerProducto(params.id);
@@ -41,9 +41,7 @@ export default async function FichaProducto({ params }) {
 
   return (
     <main className="pagina-ficha">
-      <Link href="/" className="volver-link">
-        ← Volver al catálogo
-      </Link>
+      <VolverAlCatalogo />
 
       <div className="ficha-fotos">
         {producto.fotos.map((foto, i) => (
